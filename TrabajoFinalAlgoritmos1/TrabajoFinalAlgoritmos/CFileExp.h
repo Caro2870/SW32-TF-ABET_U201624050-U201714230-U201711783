@@ -42,7 +42,8 @@ public:
 			this->TreeExten->add(archivo); // Sun Nov 3 19:04:26 2019 "Sun Nov  3 19:04:26 2019\n"
 			this->TreeSize->add(archivo);
 			this->TreeDate->add(archivo);
-			//HOLASA
+			//HOLASAXzx
+
 		}
 	}
 	string buscar_archivo_nombre(string nombre) {	
