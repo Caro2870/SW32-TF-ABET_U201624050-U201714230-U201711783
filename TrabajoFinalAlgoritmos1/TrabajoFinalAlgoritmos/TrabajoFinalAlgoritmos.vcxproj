@@ -136,9 +136,9 @@
     <ClCompile Include="MyForm.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="AVLtree.h" />
-    <ClInclude Include="FILE.h" />
-    <ClInclude Include="FILEEXP.h" />
+    <ClInclude Include="CAVLTree.h" />
+    <ClInclude Include="CArchivo.h" />
+    <ClInclude Include="CFileExp.h" />
     <ClInclude Include="MyForm.h">
       <FileType>CppForm</FileType>
     </ClInclude>
