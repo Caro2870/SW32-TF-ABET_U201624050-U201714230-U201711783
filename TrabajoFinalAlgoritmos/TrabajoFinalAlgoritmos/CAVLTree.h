@@ -1,45 +1,62 @@
 /// HOLA PRUEBA
 #pragma once
 #include <functional>
-#include <algorithm>
 using namespace std;
 
 #define max(a, b) (a > b ? a : b)
 
-template <typename E, typename Comparable = E, E NONE = 0>
-class AVLtree {
+template <typename T, typename Comparable = T, T NONE = 0>
+class CAVLtree {
 	struct Node {
-		E data;
 		Node* left;
 		Node* right;
-		int h;
 		int n;
-		Node(E data = NONE) : data(data), left(nullptr), right(nullptr), h(0), n(1) {}
+		int h;
+		T elem;
+		Node(T elem = NONE) :elem(elem), left(nullptr), right(nullptr), n(1), h(0) {}
 	};
 	Node* root;
 	int len;
-	function<Comparable(E)> key;
+	function<Comparable(T)> key;
 public:
-	AVLtree(function<Comparable(E)> key = [](E a) { return a; })
-		: root(nullptr), len(0), key(key) {}
-	~AVLtree() { destroy(root); }
-	E find(Comparable val) {
-		return find(root, val);
+	CAVLtree(function<Comparable(T)> key = [](T a) {return a; })
+		:root(nullptr), key(key), len(0) {}
+	~CAVLtree() {
+		destroy(root);
 	}
-	int height() { return Node::height(root); }
-	int size() { return len; }
-	void add(E elem) {
-		add(root, elem);
+	void add(T elem) {
+		root = add(root, elem);
 		++len;
 	}
-	void search(E elem) {}
-	void remove(E elem) {}
+	T find(Comparable val) {
+		return find(root, val);
+	}
+	void inorder(function<void(T)> proc) {
+		inOrder(root, proc);
+	}
+	int size() { return this->len; }
 private:
-	E find(Node* node, Comparable val) {
+	Node* add(Node* node, T elem) {
+		if (node == nullptr) {
+			node = new Node(elem);
+		}
+		else {
+			if (key(elem) < key(node->elem)) {
+				node->left = add(node->left, elem);
+			}
+			else {
+				node->right = add(node->right, elem);
+			}
+			node = balance(node);
+		}
+		return node;
+	}
+	T find(Node* node, Comparable val) {
 		if (node == nullptr) {
 			return NONE;
 		}
 		else if (val == key(node->elem)) {
+
 			return node->elem;
 		}
 		else if (val < key(node->elem)) {
@@ -47,6 +64,13 @@ private:
 		}
 		else {
 			return find(node->right, val);
+		}
+	}
+	void inOrder(Node* node, function<void(T)> proc) {
+		if (node != nullptr) {
+			inOrder(node->left, proc);
+			proc(node->elem);
+			inOrder(node->right, proc);
 		}
 	}
 	int height(Node* node) { return node == nullptr ? -1 : node->h; }
@@ -61,15 +85,15 @@ private:
 		aux->left = node;
 		update(aux->left);
 		update(aux);
-		return node;
+		return aux;
 	}
 	Node* rotRight(Node* node) {
 		Node* aux = node->left;
 		node->left = aux->right;
 		aux->right = node;
 		update(aux->right);
-		update(aux;)
-		return node;
+		update(aux);
+		return aux;
 	}
 	Node* balance(Node* node) {
 		int hl = height(node->left);
@@ -79,36 +103,23 @@ private:
 				node->left = rotLeft(node->left);
 			}
 			node = rotRight(node);
-		} else if (hl - hr < -1) {
+		}
+		else if (hl - hr < -1) {
 			if (height(node->right->left) > height(node->right->right)) {
 				node->right = rotRight(node->right);
 			}
 			node = rotLeft(node);
-		} else {
+		}
+		else {
 			update(node);
 		}
 		return node;
 	}
-	Node* add(Node* node, E elem) {
-		if (node == nullptr) {
-			node = new Node(elem);
-		}
-		else {
-			if (key(elem) < key(node->elem)) {
-				node->left = add(node->left, elem);
-			}
-			else {
-				node->right = add(node->right, elem);
-			}
-			node = balance(node);
-		} 
-		return node;
-	}
-	void destroy(Node* root) {
-		if (root != nullptr) {
-			destroy(root->left);
-			destroy(root->right);
-			delete root;
+	void destroy(Node* node) {
+		if (node != nullptr) {
+			destroy(node->left);
+			destroy(node->right);
+			delete node;
 		}
 	}
 };
