@@ -20,10 +20,10 @@ public:
 		auto l2 = [](CArchivo* a) {return a->getExtension(); };
 		auto l3 = [](CArchivo* a) {return a->getTamaño(); };
 		auto l4 = [](CArchivo* a) {return a->getFecha(); };
-		this->TreeName = new CAVLtree<CArchivo*, string, nullptr> (l1);
+		this->TreeName = new CAVLtree<CArchivo*, string, nullptr>(l1);
 		this->TreeExten = new CAVLtree<CArchivo*, string, nullptr>(l2);
-		this->TreeSize = new CAVLtree<CArchivo*, long long, nullptr>    (l3);
-		this->TreeDate = new CAVLtree<CArchivo*, string, nullptr> (l4);
+		this->TreeSize = new CAVLtree<CArchivo*, long long, nullptr>(l3);
+		this->TreeDate = new CAVLtree<CArchivo*, string, nullptr>(l4);
 	}
 	void scanear(string ruta) {
 		for (const auto& entry : recursive_directory_iterator(ruta)) {
@@ -44,47 +44,31 @@ public:
 			this->TreeDate->add(archivo);
 		}
 	}
-	string buscar_archivo_nombre(string nombre) {	
-		return this->TreeName->find(nombre) == nullptr ? "nada" : this->TreeName->find(nombre)->getRuta();
+	vector<CArchivo*> buscar_archivo_nombre(string nombre) {
+		vector<CArchivo*> v;
+		this->TreeName->find(nombre, v);
+		return v;
 	}
-	string buscar_archivo_exten(string extension) {
-		return this->TreeExten->find(extension) == nullptr ? "nada" : this->TreeExten->find(extension)->getRuta();
+	vector<CArchivo*> buscar_archivo_exten(string extension) {
+		vector<CArchivo*> v;
+		this->TreeExten->find(extension, v);
+		return v;
 	}
-	string buscar_archivo_tamaño(long long tamaño) {
-		return this->TreeSize->find(tamaño) == nullptr ? "nada" : this->TreeSize->find(tamaño)->getRuta();
+	vector<CArchivo*> buscar_archivo_tamaño(long long tamaño) {
+		vector<CArchivo*> v;
+		this->TreeSize->find(tamaño, v);
+		return v;
 	}
-	string buscar_archivos_fecha(string fecha) {
-		return this->TreeDate->find(fecha) == nullptr ? "nada" : this->TreeDate->find(fecha)->getRuta();
+	vector<CArchivo*> buscar_archivos_fecha(string fecha) {
+		vector<CArchivo*> v;
+		this->TreeDate->find(fecha, v);
+		return v;
 	}
-	//list<string> filtrado_columnas_nombres_inicial(char ini) {
-	//	list<string> nombre;
-	//	auto l = [&](CArchivo* x) {
-	//		nombre.push_back(x->getNombre());
-	//	};
-	//	this->TreeName->inorder(l);
-	//	//for (auto e : nombre) {
-	//		for (list<string>::iterator it = nombre.begin(); it != nombre.end(); ++it) {
-	//			if ((*it)[0] != ini) {
-	//				nombre.remove(*it);
-	//			}
-	//		}
-	//	//}
-	//	return nombre;
-	//}
-	
-	vector<string> filtrado_columnas_nombres_inicial(char ini) {
-		vector<CArchivo*> nombre;
-		vector<string> nombres_filtrados;
-		auto l = [&](CArchivo* x) {
-			nombre.push_back(x);
-		};
-		this->TreeName->inorder(l);
-		for (auto e : nombre) {
-			if (e->getNombre()[0] == ini) {
-				nombres_filtrados.push_back(e->getRuta());
-			}
-		}
-		return nombres_filtrados;
+
+	vector<CArchivo*> filtrado_columnas_nombres_inicial(string ini) {
+		vector<CArchivo*> v;
+		this->TreeName->findX(ini, v);
+		return v;
 	}
 	vector<string> filtrardo_columnas_nombres_final(char fin) {
 		vector<CArchivo*> nombre;
@@ -111,8 +95,8 @@ public:
 			for (int i = 0; i < e->getNombre().size(); ++i) {
 				if (e->getNombre()[i] == x) {
 					nombres_filtrados.push_back(e->getRuta());
-					break; 
-				} 
+					break;
+				}
 			}
 		}
 		return nombres_filtrados;
@@ -132,19 +116,19 @@ public:
 		return tamaños_filtrados;
 	}
 	/*vector<long long> filtrardo_columnas_tamaño_mayor1(long long tam) {
-		//vector<CArchivo*> tamaño;
-		vector<long long> tamaños_filtrados;
-		auto l = [&](CArchivo* x) {
-			tamaños_filtrados.push_back(x->getTamaño());
-		};
-		this->TreeName->inorder(l);
-		for (int i = tamaños_filtrados.size() - 1; i >= 0; --i) {
-			long long siz = tamaños_filtrados[i];
-			if (siz < tam) {
-				tamaños_filtrados.erase(tamaños_filtrados.begin() + i);
-			}
-		}
-		return tamaños_filtrados;
+	//vector<CArchivo*> tamaño;
+	vector<long long> tamaños_filtrados;
+	auto l = [&](CArchivo* x) {
+	tamaños_filtrados.push_back(x->getTamaño());
+	};
+	this->TreeName->inorder(l);
+	for (int i = tamaños_filtrados.size() - 1; i >= 0; --i) {
+	long long siz = tamaños_filtrados[i];
+	if (siz < tam) {
+	tamaños_filtrados.erase(tamaños_filtrados.begin() + i);
+	}
+	}
+	return tamaños_filtrados;
 	}*/
 	vector<string> filtrardo_columnas_tamaño_menor(long long tam) {
 		vector<CArchivo*> tamaño;
@@ -174,6 +158,6 @@ public:
 		}
 		return tamaños_filtrados;
 	}
-	
+
 
 };

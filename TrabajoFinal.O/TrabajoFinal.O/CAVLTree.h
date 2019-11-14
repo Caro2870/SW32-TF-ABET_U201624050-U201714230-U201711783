@@ -27,8 +27,11 @@ public:
 		root = add(root, elem);
 		++len;
 	}
-	T find(Comparable val) {
-		return find(root, val);
+	void find(Comparable val, vector<T>& v) {
+		find(root, val, v);
+	}
+	void findX(Comparable val, vector<T>& v) {
+		findX(root, val, v);
 	}
 	void inorder(function<void(T)> proc) {
 		inOrder(root, proc);
@@ -50,19 +53,36 @@ private:
 		}
 		return node;
 	}
-	T find(Node* node, Comparable val) {
+	void find(Node* node, Comparable val, vector<T>& v) {
 		if (node == nullptr) {
-			return NONE;
+			return;
 		}
 		else if (val == key(node->elem)) {
-
-			return node->elem;
+			v.push_back(node->elem);
+			find(node->left, val, v);
+			find(node->right, val, v);
 		}
 		else if (val < key(node->elem)) {
-			return find(node->left, val);
+			find(node->left, val, v);
 		}
 		else {
-			return find(node->right, val);
+			find(node->right, val, v);
+		}
+	}
+	void findX(Node* node, Comparable val, vector<T>& v) {
+		if (node == nullptr) {
+			return;
+		}
+		else if (val[0] == key(node->elem)[0]) {
+			v.push_back(node->elem);
+			findX(node->left, val, v);
+			findX(node->right, val, v);
+		}
+		else if (val[0] < key(node->elem)[0]) {
+			findX(node->left, val, v);
+		}
+		else {
+			findX(node->right, val, v);
 		}
 	}
 	void inOrder(Node* node, function<void(T)> proc) {

@@ -10,7 +10,7 @@ class CArchivo {
 public:
 	CArchivo(string nombre, string extension, long long tamaño, string fecha, string ruta)
 		:nombre(nombre), extension(extension), tamaño(tamaño), fecha(fecha), ruta(ruta) {}
-	
+
 	string getNombre() { return this->nombre; }
 	string getExtension() { return this->extension; }
 	long long getTamaño() { return this->tamaño; }

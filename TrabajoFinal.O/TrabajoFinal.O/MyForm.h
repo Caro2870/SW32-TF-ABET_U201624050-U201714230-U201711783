@@ -1,7 +1,7 @@
 #pragma once
 #include "CFileExp.h"
 #include <msclr\marshal_cppstd.h>
-namespace TrabajoFinalAlgoritmos {
+namespace TrabajoFinalO {
 
 	using namespace System;
 	using namespace System::ComponentModel;
@@ -40,7 +40,7 @@ namespace TrabajoFinalAlgoritmos {
 		{
 			InitializeComponent();
 			this->fileExp = new CFileExp;
-	
+
 		}
 
 	protected:
@@ -433,40 +433,56 @@ namespace TrabajoFinalAlgoritmos {
 	private: System::Void buscar(System::Object^  sender, System::EventArgs^  e) {
 		if (rButtNombre->Checked) {
 			string name = context.marshal_as<string>(txtBuscar->Text);
-			string nombre = this->fileExp->buscar_archivo_nombre(name);
-			if (nombre != "nada") {
-				String^ n = gcnew String(nombre.c_str());
-				listBox1->Items->Add(n);
-			} else {
+			vector<CArchivo*> nombre = this->fileExp->buscar_archivo_nombre(name);
+			if (!nombre.empty()) {
+				for (int i = 0; i < nombre.size(); ++i) {
+					string s = nombre[i]->getRuta();
+					String^ n = gcnew String(s.c_str());
+					listBox1->Items->Add(n);
+				}
+			}
+			else {
 				MessageBox::Show("No se encontro elemento >:v");
 			}
-			
-		} else if (rButtExtension->Checked) {
+
+		}
+		else if (rButtExtension->Checked) {
 			string exte = context.marshal_as<string>(txtBuscar->Text);
-			string extension = this->fileExp->buscar_archivo_exten(exte);
-			if (extension != "nada") {
-				String^ n = gcnew String(extension.c_str());
-				listBox1->Items->Add(n);
+			vector<CArchivo*> extension = this->fileExp->buscar_archivo_exten(exte);
+			if (!extension.empty()) {
+				for (int i = 0; i < extension.size(); ++i) {
+					string s = extension[i]->getRuta();
+					String^ n = gcnew String(s.c_str());
+					listBox1->Items->Add(n);
+				}
 			}
 			else {
 				MessageBox::Show("No se encontro elemento >:v");
 			}
-		} else if (rButtFecha->Checked) {
+		}
+		else if (rButtFecha->Checked) {
 			string date = context.marshal_as<string>(txtBuscar->Text);
-			string fecha = this->fileExp->buscar_archivos_fecha(date);
-			if (fecha != "nada") {
-				String^ n = gcnew String(fecha.c_str());
-				listBox1->Items->Add(n);
+			vector<CArchivo*> fecha = this->fileExp->buscar_archivos_fecha(date);
+			if (!fecha.empty()) {
+				for (int i = 0; i < fecha.size(); ++i) {
+					string s = fecha[i]->getRuta();
+					String^ n = gcnew String(s.c_str());
+					listBox1->Items->Add(n);
+				}
 			}
 			else {
 				MessageBox::Show("No se encontro elemento >:v");
 			}
-		} else if (rButtTam->Checked) {
+		}
+		else if (rButtTam->Checked) {
 			long long numero = Int64::Parse(txtBuscar->Text);
-			string tamaño = this->fileExp->buscar_archivo_tamaño(numero);
-			if (tamaño != "nada") {
-				String^ n = gcnew String(tamaño.c_str());
-				listBox1->Items->Add(n);
+			vector<CArchivo*> tamaño = this->fileExp->buscar_archivo_tamaño(numero);
+			if (!tamaño.empty()) {
+				for (int i = 0; i < tamaño.size(); ++i) {
+					string s = tamaño[i]->getRuta();
+					String^ n = gcnew String(s.c_str());
+					listBox1->Items->Add(n);
+				}
 			}
 			else {
 				MessageBox::Show("No se encontro elemento >:v");
@@ -477,22 +493,20 @@ namespace TrabajoFinalAlgoritmos {
 	private: System::Void filtrar_c_nombres(System::Object^  sender, System::EventArgs^  e) {
 		if (txtEmpieza->Text != "") {
 			string ini = context.marshal_as<string>(txtEmpieza->Text);
-			vector<string> v = this->fileExp->filtrado_columnas_nombres_inicial(ini[0]);
-			//for (list<string>::iterator it = v.begin(); it != v.end(); it++) {
-			//	String^ n = gcnew String((*it).c_str());
-			//	listBox1->Items->Add(n);
-			//	//v.pop_front();
-			//}
+			vector<CArchivo*> v = this->fileExp->filtrado_columnas_nombres_inicial(ini);
 			if (!v.empty()) {
 				for (int i = 0; i < v.size(); ++i) {
-					String^ n = gcnew String(v[i].c_str());
+					string s = v[i]->getRuta();
+					String^ n = gcnew String(s.c_str());
 					listBox1->Items->Add(n);
 				}
-			} else {
+			}
+			else {
 				MessageBox::Show("No hay elementos");
 			}
 
-		} else if (txtTermina->Text != "") {
+		}
+		else if (txtTermina->Text != "") {
 			string fin = context.marshal_as<string>(txtTermina->Text);
 			vector<string> v = this->fileExp->filtrardo_columnas_nombres_final(fin[0]);
 			if (!v.empty()) {
@@ -500,11 +514,13 @@ namespace TrabajoFinalAlgoritmos {
 					String^ n = gcnew String(v[i].c_str());
 					listBox1->Items->Add(n);
 				}
-			} else {
+			}
+			else {
 				MessageBox::Show("No hay elementos");
 			}
 
-		} else if (txtCotiene->Text != "") {
+		}
+		else if (txtCotiene->Text != "") {
 			string con = context.marshal_as<string>(txtCotiene->Text);
 			vector<string> v = this->fileExp->filtrardo_columnas_nombres_contiene(con[0]);
 			if (!v.empty()) {
@@ -512,7 +528,8 @@ namespace TrabajoFinalAlgoritmos {
 					String^ n = gcnew String(v[i].c_str());
 					listBox1->Items->Add(n);
 				}
-			} else {
+			}
+			else {
 				MessageBox::Show("No hay elementos");
 			}
 		}
@@ -527,11 +544,13 @@ namespace TrabajoFinalAlgoritmos {
 					String^ n = gcnew String(v[i].c_str());
 					listBox1->Items->Add(n);
 				}
-			} else {
+			}
+			else {
 				MessageBox::Show("No hay elementos");
 			}
 
-		} else if (txtMenor->Text != "") {
+		}
+		else if (txtMenor->Text != "") {
 			long long men = Int64::Parse(txtMenor->Text);
 			vector<string> v = this->fileExp->filtrardo_columnas_tamaño_menor(men);
 			if (!v.empty()) {
@@ -539,11 +558,13 @@ namespace TrabajoFinalAlgoritmos {
 					String^ n = gcnew String(v[i].c_str());
 					listBox1->Items->Add(n);
 				}
-			} else {
+			}
+			else {
 				MessageBox::Show("No hay elementos");
 			}
 
-		} else if (txtIgual->Text != "") {
+		}
+		else if (txtIgual->Text != "") {
 			long long igual = Int64::Parse(txtIgual->Text);
 			vector<string> v = this->fileExp->filtrardo_columnas_tamaño_igual(igual);
 			if (!v.empty()) {
@@ -551,11 +572,12 @@ namespace TrabajoFinalAlgoritmos {
 					String^ n = gcnew String(v[i].c_str());
 					listBox1->Items->Add(n);
 				}
-			} else {
+			}
+			else {
 				MessageBox::Show("No hay elementos");
 			}
 
 		}
 	}
-};
+	};
 }

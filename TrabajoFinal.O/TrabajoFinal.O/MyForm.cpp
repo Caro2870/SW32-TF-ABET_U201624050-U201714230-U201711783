@@ -1,6 +1,6 @@
 #include "MyForm.h"
 
-using namespace TrabajoFinalAlgoritmos;
+using namespace TrabajoFinalO;
 
 int main() {
 
