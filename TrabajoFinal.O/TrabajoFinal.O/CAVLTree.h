@@ -33,6 +33,12 @@ public:
 	void findX(Comparable val, vector<T>& v) {
 		findX(root, val, v);
 	}
+	void findMa(Comparable val, vector<T>& v) {
+		findMa(root, val, v);
+	}
+	void findMi(Comparable val, vector<T>& v) {
+		findMin(root, val, v);
+	}
 	void inorder(function<void(T)> proc) {
 		inOrder(root, proc);
 	}
@@ -53,6 +59,7 @@ private:
 		}
 		return node;
 	}
+	//AGREGAR ELEMTOS CON EL MISMO NOMBRE
 	void find(Node* node, Comparable val, vector<T>& v) {
 		if (node == nullptr) {
 			return;
@@ -69,6 +76,7 @@ private:
 			find(node->right, val, v);
 		}
 	}
+	//AGREGAR ELEMENTOS POR PRIMERA LETRA
 	void findX(Node* node, Comparable val, vector<T>& v) {
 		if (node == nullptr) {
 			return;
@@ -83,6 +91,40 @@ private:
 		}
 		else {
 			findX(node->right, val, v);
+		}
+	}
+	//AGREGAR MAYORES ELEMENTOS 
+	void findMa(Node* node, Comparable val, vector<T>& v) {
+		if (node == nullptr) {
+			return;
+		}
+		else if (val == key(node->elem)) {
+			findMa(node->right, val, v);
+		}
+		else if (val < key(node->elem)) {
+			v.push_back(node->elem);
+			findMa(node->left, val, v);
+			findMa(node->right, val, v);
+		}
+		else {
+			findMa(node->right, val, v);
+		}
+	}
+	//AGREGAR MENORES ELEMENTOS
+	void findMin(Node* node, Comparable val, vector<T>& v) {
+		if (node == nullptr) {
+			return;
+		}
+		else if (val == key(node->elem)) {
+			findMin(node->left, val, v);
+		}
+		else if (val < key(node->elem)) {
+			findMin(node->left, val, v);
+		}
+		else {
+			v.push_back(node->elem);
+			findMin(node->left, val, v);
+			findMin(node->right, val, v);
 		}
 	}
 	void inOrder(Node* node, function<void(T)> proc) {

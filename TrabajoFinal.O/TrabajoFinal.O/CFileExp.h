@@ -14,21 +14,26 @@ class CFileExp {
 	CAVLtree<CArchivo*, string, nullptr>* TreeExten;
 	CAVLtree<CArchivo*, long long, nullptr>* TreeSize;
 	CAVLtree<CArchivo*, string, nullptr>* TreeDate;
+	CAVLtree<CArchivo*, string, nullptr>* TreeReversName;
 public:
 	CFileExp() {
 		auto l1 = [](CArchivo* a) {return a->getNombre(); };
 		auto l2 = [](CArchivo* a) {return a->getExtension(); };
 		auto l3 = [](CArchivo* a) {return a->getTamaño(); };
 		auto l4 = [](CArchivo* a) {return a->getFecha(); };
+		auto l5 = [](CArchivo* b) {return b->getRname(); };
 		this->TreeName = new CAVLtree<CArchivo*, string, nullptr>(l1);
 		this->TreeExten = new CAVLtree<CArchivo*, string, nullptr>(l2);
 		this->TreeSize = new CAVLtree<CArchivo*, long long, nullptr>(l3);
 		this->TreeDate = new CAVLtree<CArchivo*, string, nullptr>(l4);
+		this->TreeReversName = new CAVLtree<CArchivo*, string, nullptr>(l5);
 	}
 	void scanear(string ruta) {
 		for (const auto& entry : recursive_directory_iterator(ruta)) {
 			string ruta = entry.path().string();
 			string nombre = entry.path().filename().string();
+			string RName = entry.path().filename().string();
+			reverse(RName.begin(), RName.end());
 			string extension = entry.path().extension().string();
 			long long tamaño = -1;
 			if (is_directory(status(entry.path())))  tamaño = 0;
@@ -36,12 +41,12 @@ public:
 			auto ftime = last_write_time(entry.path());
 			time_t cftime = decltype(ftime)::clock::to_time_t(ftime);
 			string fecha = asctime(localtime(&cftime));
-
-			CArchivo* archivo = new CArchivo(nombre, extension, tamaño, fecha, ruta);
+			CArchivo* archivo = new CArchivo(nombre, extension, tamaño, fecha, ruta, RName);
 			this->TreeName->add(archivo);
 			this->TreeExten->add(archivo); // Sun Nov 3 19:04:26 2019 "Sun Nov  3 19:04:26 2019\n"
 			this->TreeSize->add(archivo);
 			this->TreeDate->add(archivo);
+			this->TreeReversName->add(archivo);
 		}
 	}
 	vector<CArchivo*> buscar_archivo_nombre(string nombre) {
@@ -70,19 +75,10 @@ public:
 		this->TreeName->findX(ini, v);
 		return v;
 	}
-	vector<string> filtrardo_columnas_nombres_final(char fin) {
-		vector<CArchivo*> nombre;
-		vector<string> nombres_filtrados;
-		auto l = [&](CArchivo* x) {
-			nombre.push_back(x);
-		};
-		this->TreeName->inorder(l);
-		for (auto e : nombre) {
-			if (e->getNombre()[e->getNombre().size() - 1] == fin) {
-				nombres_filtrados.push_back(e->getRuta());
-			}
-		}
-		return nombres_filtrados;
+	vector<CArchivo*> filtrardo_columnas_nombres_final(string fin) {
+		vector<CArchivo*> v;
+		this->TreeReversName->findX(fin, v);
+		return v;
 	}
 	vector<string> filtrardo_columnas_nombres_contiene(char x) {
 		vector<CArchivo*> nombre;
@@ -101,62 +97,20 @@ public:
 		}
 		return nombres_filtrados;
 	}
-	vector<string> filtrardo_columnas_tamaño_mayor(long long tam) {
+	vector<CArchivo*> filtrardo_columnas_tamaño_mayor(long long tam) {
 		vector<CArchivo*> tamaño;
-		vector<string> tamaños_filtrados;
-		auto l = [&](CArchivo* x) {
-			tamaño.push_back(x);
-		};
-		this->TreeName->inorder(l);
-		for (auto e : tamaño) {
-			if (e->getTamaño() > tam) {
-				tamaños_filtrados.push_back(e->getRuta());
-			}
-		}
-		return tamaños_filtrados;
+		this->TreeSize->findMa(tam, tamaño);
+		return tamaño;
 	}
-	/*vector<long long> filtrardo_columnas_tamaño_mayor1(long long tam) {
-	//vector<CArchivo*> tamaño;
-	vector<long long> tamaños_filtrados;
-	auto l = [&](CArchivo* x) {
-	tamaños_filtrados.push_back(x->getTamaño());
-	};
-	this->TreeName->inorder(l);
-	for (int i = tamaños_filtrados.size() - 1; i >= 0; --i) {
-	long long siz = tamaños_filtrados[i];
-	if (siz < tam) {
-	tamaños_filtrados.erase(tamaños_filtrados.begin() + i);
-	}
-	}
-	return tamaños_filtrados;
-	}*/
-	vector<string> filtrardo_columnas_tamaño_menor(long long tam) {
+	vector<CArchivo*> filtrardo_columnas_tamaño_menor(long long tam) {
 		vector<CArchivo*> tamaño;
-		vector<string> tamaños_filtrados;
-		auto l = [&](CArchivo* x) {
-			tamaño.push_back(x);
-		};
-		this->TreeName->inorder(l);
-		for (auto e : tamaño) {
-			if (e->getTamaño() < tam) {
-				tamaños_filtrados.push_back(e->getRuta());
-			}
-		}
-		return tamaños_filtrados;
+		this->TreeSize->findMi(tam, tamaño);
+		return tamaño;
 	}
-	vector<string> filtrardo_columnas_tamaño_igual(long long tam) {
-		vector<CArchivo*> tamaño;
-		vector<string> tamaños_filtrados;
-		auto l = [&](CArchivo* x) {
-			tamaño.push_back(x);
-		};
-		this->TreeName->inorder(l);
-		for (auto e : tamaño) {
-			if (e->getTamaño() == tam) {
-				tamaños_filtrados.push_back(e->getRuta());
-			}
-		}
-		return tamaños_filtrados;
+	vector<CArchivo*> filtrardo_columnas_tamaño_igual(long long tam) {
+		vector<CArchivo*> v;
+		this->TreeSize->find(tam, v);
+		return v;
 	}
 
 
