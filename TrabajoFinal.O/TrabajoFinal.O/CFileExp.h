@@ -112,6 +112,59 @@ public:
 		this->TreeSize->find(tam, v);
 		return v;
 	}
+	void ordenarAscendente(string* a, int n) {
+		sort(a, 0, n - 1);
+	}
+	void ordenarDescendente(string* a, int n) {
+		sortX(a, 0, n - 1);
+	}
+private:
+	void merge(string* a, int ini, int fin) {
+		int len = (fin - ini) + 1;
+		string* temp = new string[len];
+		int mid = (fin + ini) / 2;
+		int i = ini;
+		int j = mid + 1;
+		for (int k = 0; i <= mid || j <= fin; k++) {
+			if (i > mid || j <= fin && a[j] < a[i]) temp[k] = a[j++];
+			else temp[k] = a[i++];
+		}
+		for (int k = 0; k < len; k++) {
+			a[ini + k] = temp[k];
+		}
+		delete[] temp;
+	}
+	void sort(string* a, int i, int f) {
+		if (i < f) {
+			int mid = (i + f) / 2;
+			sort(a, i, mid);
+			sort(a, mid + 1, f);
+			merge(a, i, f);
+		}
+	}
+	void mergeX(string* a, int ini, int fin) {
+		int len = (fin - ini) + 1;
+		string* temp = new string[len];
+		int mid = (fin + ini) / 2;
+		int i = ini;
+		int j = mid + 1;
+		for (int k = 0; i <= mid || j <= fin; k++) {
+			if (i > mid || j <= fin && a[j] > a[i]) temp[k] = a[j++];
+			else temp[k] = a[i++];
+		}
+		for (int k = 0; k < len; k++) {
+			a[ini + k] = temp[k];
+		}
+		delete[] temp;
+	}
 
+	void sortX(string* a, int i, int f) {
+		if (i < f) {
+			int mid = (i + f) / 2;
+			sortX(a, i, mid);
+			sortX(a, mid + 1, f);
+			mergeX(a, i, f);
+		}
+	}
 
 };

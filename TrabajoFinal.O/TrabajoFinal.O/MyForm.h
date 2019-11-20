@@ -1,7 +1,9 @@
 #pragma once
 #include "CFileExp.h"
+#include <vector>
+#include <algorithm>
 #include <msclr\marshal_cppstd.h>
-namespace TrabajoFinalO {
+namespace TrabajoFinalO{
 
 	using namespace System;
 	using namespace System::ComponentModel;
@@ -74,7 +76,6 @@ namespace TrabajoFinalO {
 
 		void InitializeComponent(void)
 		{
-			System::ComponentModel::ComponentResourceManager^  resources = (gcnew System::ComponentModel::ComponentResourceManager(MyForm::typeid));
 			this->txtFile = (gcnew System::Windows::Forms::TextBox());
 			this->buttOpen = (gcnew System::Windows::Forms::Button());
 			this->label2 = (gcnew System::Windows::Forms::Label());
@@ -108,20 +109,22 @@ namespace TrabajoFinalO {
 			// 
 			// txtFile
 			// 
-			this->txtFile->Location = System::Drawing::Point(109, 9);
+			this->txtFile->Location = System::Drawing::Point(118, 9);
 			this->txtFile->Name = L"txtFile";
 			this->txtFile->Size = System::Drawing::Size(298, 20);
 			this->txtFile->TabIndex = 0;
-			this->txtFile->TextChanged += gcnew System::EventHandler(this, &MyForm::txtFile_TextChanged);
+			this->txtFile->KeyPress += gcnew System::Windows::Forms::KeyPressEventHandler(this, &MyForm::validar);
 			// 
 			// buttOpen
 			// 
 			this->buttOpen->BackColor = System::Drawing::SystemColors::InactiveBorder;
+			this->buttOpen->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 9.75F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(0)));
 			this->buttOpen->Location = System::Drawing::Point(437, 7);
 			this->buttOpen->Name = L"buttOpen";
 			this->buttOpen->Size = System::Drawing::Size(155, 23);
 			this->buttOpen->TabIndex = 1;
-			this->buttOpen->Text = L"Open File";
+			this->buttOpen->Text = L"Abrir archivo";
 			this->buttOpen->UseVisualStyleBackColor = false;
 			this->buttOpen->Click += gcnew System::EventHandler(this, &MyForm::Magic);
 			// 
@@ -133,11 +136,11 @@ namespace TrabajoFinalO {
 			this->label2->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 9.75F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(128)));
 			this->label2->ForeColor = System::Drawing::SystemColors::ActiveCaptionText;
-			this->label2->Location = System::Drawing::Point(3, 9);
+			this->label2->Location = System::Drawing::Point(3, 11);
 			this->label2->Name = L"label2";
-			this->label2->Size = System::Drawing::Size(111, 16);
+			this->label2->Size = System::Drawing::Size(124, 16);
 			this->label2->TabIndex = 4;
-			this->label2->Text = L"Enter file name";
+			this->label2->Text = L"Ingresar  archivo";
 			// 
 			// txtBuscar
 			// 
@@ -145,7 +148,6 @@ namespace TrabajoFinalO {
 			this->txtBuscar->Name = L"txtBuscar";
 			this->txtBuscar->Size = System::Drawing::Size(177, 20);
 			this->txtBuscar->TabIndex = 20;
-			this->txtBuscar->TextChanged += gcnew System::EventHandler(this, &MyForm::txtBuscar_TextChanged);
 			// 
 			// radioButton2
 			// 
@@ -174,6 +176,7 @@ namespace TrabajoFinalO {
 			this->radioButton1->TabStop = true;
 			this->radioButton1->Text = L"Descendente";
 			this->radioButton1->UseVisualStyleBackColor = false;
+			this->radioButton1->CheckedChanged += gcnew System::EventHandler(this, &MyForm::radioButton1_CheckedChanged);
 			// 
 			// button4
 			// 
@@ -187,6 +190,7 @@ namespace TrabajoFinalO {
 			this->button4->TabIndex = 17;
 			this->button4->Text = L"Ordenar";
 			this->button4->UseVisualStyleBackColor = false;
+			this->button4->Click += gcnew System::EventHandler(this, &MyForm::button4_Click);
 			// 
 			// button3
 			// 
@@ -257,6 +261,7 @@ namespace TrabajoFinalO {
 			this->rButtTam->TabStop = true;
 			this->rButtTam->Text = L"Tamaño";
 			this->rButtTam->UseVisualStyleBackColor = false;
+			this->rButtTam->KeyPress += gcnew System::Windows::Forms::KeyPressEventHandler(this, &MyForm::valT);
 			// 
 			// rButtExtension
 			// 
@@ -420,6 +425,7 @@ namespace TrabajoFinalO {
 			this->txtMenor->Name = L"txtMenor";
 			this->txtMenor->Size = System::Drawing::Size(100, 20);
 			this->txtMenor->TabIndex = 36;
+			this->txtMenor->KeyPress += gcnew System::Windows::Forms::KeyPressEventHandler(this, &MyForm::valMenorque);
 			// 
 			// txtIgual
 			// 
@@ -427,6 +433,7 @@ namespace TrabajoFinalO {
 			this->txtIgual->Name = L"txtIgual";
 			this->txtIgual->Size = System::Drawing::Size(100, 20);
 			this->txtIgual->TabIndex = 35;
+			this->txtIgual->KeyPress += gcnew System::Windows::Forms::KeyPressEventHandler(this, &MyForm::valIguala);
 			// 
 			// txtMayor
 			// 
@@ -434,6 +441,7 @@ namespace TrabajoFinalO {
 			this->txtMayor->Name = L"txtMayor";
 			this->txtMayor->Size = System::Drawing::Size(100, 20);
 			this->txtMayor->TabIndex = 34;
+			this->txtMayor->KeyPress += gcnew System::Windows::Forms::KeyPressEventHandler(this, &MyForm::valMayorque);
 			// 
 			// button1
 			// 
@@ -453,7 +461,6 @@ namespace TrabajoFinalO {
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->BackColor = System::Drawing::SystemColors::Highlight;
-			this->BackgroundImage = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"$this.BackgroundImage")));
 			this->ClientSize = System::Drawing::Size(672, 661);
 			this->Controls->Add(this->label7);
 			this->Controls->Add(this->label8);
@@ -484,7 +491,6 @@ namespace TrabajoFinalO {
 			this->Controls->Add(this->label2);
 			this->Controls->Add(this->buttOpen);
 			this->Controls->Add(this->txtFile);
-			this->Icon = (cli::safe_cast<System::Drawing::Icon^>(resources->GetObject(L"$this.Icon")));
 			this->Name = L"MyForm";
 			this->Text = L"FILEEXP";
 			this->ResumeLayout(false);
@@ -495,6 +501,8 @@ namespace TrabajoFinalO {
 	private: System::Void Magic(System::Object^  sender, System::EventArgs^  e) {
 		string name = context.marshal_as<string>(txtFile->Text);
 		this->fileExp->scanear(name);
+		MessageBox::Show("Se escanearon los archivos exitosamente uwu");
+
 	}
 
 	private: System::Void buscar(System::Object^  sender, System::EventArgs^  e) {
@@ -543,6 +551,7 @@ namespace TrabajoFinalO {
 			}
 		}
 		else if (rButtTam->Checked) {
+			
 			long long numero = Int64::Parse(txtBuscar->Text);
 			vector<CArchivo*> tamaño = this->fileExp->buscar_archivo_tamaño(numero);
 			if (!tamaño.empty()) {
@@ -653,15 +662,122 @@ namespace TrabajoFinalO {
 
 		}
 	}
-	private: System::Void txtBuscar_TextChanged(System::Object^  sender, System::EventArgs^  e) {
-	}
+	
 	private: System::Void listBox1_SelectedIndexChanged(System::Object^  sender, System::EventArgs^  e) {
 	}
 	private: System::Void rButtFecha_CheckedChanged(System::Object^  sender, System::EventArgs^  e) {
 	}
 	private: System::Void label1_Click(System::Object^  sender, System::EventArgs^  e) {
 	}
-	private: System::Void txtFile_TextChanged(System::Object^  sender, System::EventArgs^  e) {
+	private: System::Void button4_Click(System::Object^  sender, System::EventArgs^  e) {
+		vector<string> v = this->getElements();
+
+		string* elem = new string[v.size()];
+
+		for (int i = 0; i < v.size(); ++i)
+			elem[i] = v[i];
+
+		if (radioButton2->Checked)
+			this->fileExp->ordenarAscendente(elem, v.size());
+		if (radioButton1->Checked)
+			this->fileExp->ordenarDescendente(elem, v.size());
+		listBox1->Items->Clear();
+
+		for (int i = 0; i < v.size(); ++i) {
+			String^ n = gcnew String(elem[i].c_str());
+			listBox1->Items->Add(n);
+		}
 	}
-	};
+	private:vector<string> getElements() {
+		vector<string> elementos;
+		for (int i = 0; i < listBox1->Items->Count; ++i) {
+			String^ prueba = listBox1->Items[i]->ToString();
+			string con = context.marshal_as<string>(prueba);
+			elementos.push_back(con);
+		}
+		return elementos;
+	}
+	private: System::Void Sort(System::Object^  sender, System::EventArgs^  e) {
+		vector<string> v = this->getElements();
+
+		string* elem = new string[v.size()];
+
+		for (int i = 0; i < v.size(); ++i)
+			elem[i] = v[i];
+
+		if (radioButton2->Checked)
+			this->fileExp->ordenarAscendente(elem, v.size());
+		if (radioButton1->Checked)
+			this->fileExp->ordenarDescendente(elem, v.size());
+		listBox1->Items->Clear();
+
+		for (int i = 0; i < v.size(); ++i) {
+			String^ n = gcnew String(elem[i].c_str());
+			listBox1->Items->Add(n);
+		}
+
+	}
+	private: System::Void radioButton1_CheckedChanged(System::Object^  sender, System::EventArgs^  e) {
+	}
+	private: System::Void validar(System::Object^  sender, System::Windows::Forms::KeyPressEventArgs^  e) {
+
+		
+	}
+private: System::Void valMayorque(System::Object^  sender, System::Windows::Forms::KeyPressEventArgs^  e) {
+	if (Char::IsDigit(e->KeyChar))
+	{
+		e->Handled = false;
+	}
+	else if (Char::IsControl(e->KeyChar))
+	{
+		e->Handled = false;
+	}
+	else
+	{
+		e->Handled = true;
+	}
+}
+private: System::Void valMenorque(System::Object^  sender, System::Windows::Forms::KeyPressEventArgs^  e) {
+	if (Char::IsDigit(e->KeyChar))
+	{
+		e->Handled = false;
+	}
+	else if (Char::IsControl(e->KeyChar))
+	{
+		e->Handled = false;
+	}
+	else
+	{
+		e->Handled = true;
+	}
+}
+private: System::Void valIguala(System::Object^  sender, System::Windows::Forms::KeyPressEventArgs^  e) {
+	if (Char::IsDigit(e->KeyChar))
+	{
+		e->Handled = false;
+	}
+	else if (Char::IsControl(e->KeyChar))
+	{
+		e->Handled = false;
+	}
+	else
+	{
+		e->Handled = true;
+	}
+}
+private: System::Void valT(System::Object^  sender, System::Windows::Forms::KeyPressEventArgs^  e) {
+	if (Char::IsDigit(e->KeyChar))
+	{
+		e->Handled = false;
+	}
+	else if (Char::IsControl(e->KeyChar))
+	{
+		e->Handled = false;
+	}
+	else
+	{
+		e->Handled = true;
+	}
+}
+};
 }
