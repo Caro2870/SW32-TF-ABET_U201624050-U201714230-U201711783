@@ -22,15 +22,15 @@ public:
 		auto l3 = [](CArchivo* a) {return a->getTamaño(); };
 		auto l4 = [](CArchivo* a) {return a->getFecha(); };
 		auto l5 = [](CArchivo* b) {return b->getRname(); };
-		this->TreeName = new CAVLtree<CArchivo*, string, nullptr> (l1);
+		this->TreeName = new CAVLtree<CArchivo*, string, nullptr>(l1);
 		this->TreeExten = new CAVLtree<CArchivo*, string, nullptr>(l2);
-		this->TreeSize = new CAVLtree<CArchivo*, long long, nullptr>    (l3);
-		this->TreeDate = new CAVLtree<CArchivo*, string, nullptr> (l4);
+		this->TreeSize = new CAVLtree<CArchivo*, long long, nullptr>(l3);
+		this->TreeDate = new CAVLtree<CArchivo*, string, nullptr>(l4);
 		this->TreeReversName = new CAVLtree<CArchivo*, string, nullptr>(l5);
 	}
 	void scanear(string ruta) {
 		for (const auto& entry : recursive_directory_iterator(ruta)) {
-			string ruta = entry.path().string(); 
+			string ruta = entry.path().string();
 			string nombre = entry.path().filename().string();
 			string RName = entry.path().filename().string();
 			reverse(RName.begin(), RName.end());
@@ -49,7 +49,7 @@ public:
 			this->TreeReversName->add(archivo);
 		}
 	}
-	vector<CArchivo*> buscar_archivo_nombre(string nombre) {	
+	vector<CArchivo*> buscar_archivo_nombre(string nombre) {
 		vector<CArchivo*> v;
 		this->TreeName->find(nombre, v);
 		return v;
@@ -69,7 +69,7 @@ public:
 		this->TreeDate->find(fecha, v);
 		return v;
 	}
-	
+
 	vector<CArchivo*> filtrado_columnas_nombres_inicial(string ini) {
 		vector<CArchivo*> v;
 		this->TreeName->findX(ini, v);
@@ -91,8 +91,8 @@ public:
 			for (int i = 0; i < e->getNombre().size(); ++i) {
 				if (e->getNombre()[i] == x) {
 					nombres_filtrados.push_back(e->getRuta());
-					break; 
-				} 
+					break;
+				}
 			}
 		}
 		return nombres_filtrados;
@@ -112,6 +112,59 @@ public:
 		this->TreeSize->find(tam, v);
 		return v;
 	}
-	
+	void ordenarAscendente(string* a, int n) {
+		sort(a, 0, n - 1);
+	}
+	void ordenarDescendente(string* a, int n) {
+		sortX(a, 0, n - 1);
+	}
+private:
+	void merge(string* a, int ini, int fin) {
+		int len = (fin - ini) + 1;
+		string* temp = new string[len];
+		int mid = (fin + ini) / 2;
+		int i = ini;
+		int j = mid + 1;
+		for (int k = 0; i <= mid || j <= fin; k++) {
+			if (i > mid || j <= fin && a[j] < a[i]) temp[k] = a[j++];
+			else temp[k] = a[i++];
+		}
+		for (int k = 0; k < len; k++) {
+			a[ini + k] = temp[k];
+		}
+		delete[] temp;
+	}
+	void sort(string* a, int i, int f) {
+		if (i < f) {
+			int mid = (i + f) / 2;
+			sort(a, i, mid);
+			sort(a, mid + 1, f);
+			merge(a, i, f);
+		}
+	}
+	void mergeX(string* a, int ini, int fin) {
+		int len = (fin - ini) + 1;
+		string* temp = new string[len];
+		int mid = (fin + ini) / 2;
+		int i = ini;
+		int j = mid + 1;
+		for (int k = 0; i <= mid || j <= fin; k++) {
+			if (i > mid || j <= fin && a[j] > a[i]) temp[k] = a[j++];
+			else temp[k] = a[i++];
+		}
+		for (int k = 0; k < len; k++) {
+			a[ini + k] = temp[k];
+		}
+		delete[] temp;
+	}
+
+	void sortX(string* a, int i, int f) {
+		if (i < f) {
+			int mid = (i + f) / 2;
+			sortX(a, i, mid);
+			sortX(a, mid + 1, f);
+			mergeX(a, i, f);
+		}
+	}
 
 };

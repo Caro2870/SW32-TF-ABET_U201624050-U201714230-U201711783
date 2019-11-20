@@ -1,5 +1,7 @@
 #pragma once
 #include "CFileExp.h"
+#include <vector>
+#include <algorithm>
 #include <msclr\marshal_cppstd.h>
 namespace TrabajoFinalAlgoritmos {
 
@@ -175,6 +177,7 @@ namespace TrabajoFinalAlgoritmos {
 			this->radioButton1->TabStop = true;
 			this->radioButton1->Text = L"Descendente";
 			this->radioButton1->UseVisualStyleBackColor = false;
+			this->radioButton1->CheckedChanged += gcnew System::EventHandler(this, &MyForm::radioButton1_CheckedChanged);
 			// 
 			// button4
 			// 
@@ -188,6 +191,7 @@ namespace TrabajoFinalAlgoritmos {
 			this->button4->TabIndex = 17;
 			this->button4->Text = L"Ordenar";
 			this->button4->UseVisualStyleBackColor = false;
+			this->button4->Click += gcnew System::EventHandler(this, &MyForm::button4_Click);
 			// 
 			// button3
 			// 
@@ -648,6 +652,56 @@ private: System::Void listBox1_SelectedIndexChanged(System::Object^  sender, Sys
 private: System::Void rButtFecha_CheckedChanged(System::Object^  sender, System::EventArgs^  e) {
 }
 private: System::Void label1_Click(System::Object^  sender, System::EventArgs^  e) {
+}
+private: System::Void button4_Click(System::Object^  sender, System::EventArgs^  e) {
+	vector<string> v = this->getElements();
+
+	string* elem = new string[v.size()];
+
+	for (int i = 0; i < v.size(); ++i)
+		elem[i] = v[i];
+
+	if (radioButton2->Checked)
+		this->fileExp->ordenarAscendente(elem, v.size());
+	if (radioButton1->Checked)
+		this->fileExp->ordenarDescendente(elem, v.size());
+	listBox1->Items->Clear();
+
+	for (int i = 0; i < v.size(); ++i) {
+		String^ n = gcnew String(elem[i].c_str());
+		listBox1->Items->Add(n);
+	}
+}
+		 private:vector<string> getElements() {
+			 vector<string> elementos;
+			 for (int i = 0; i < listBox1->Items->Count; ++i) {
+				 String^ prueba = listBox1->Items[i]->ToString();
+				 string con = context.marshal_as<string>(prueba);
+				 elementos.push_back(con);
+			 }
+			 return elementos;
+		 }
+	private: System::Void Sort(System::Object^  sender, System::EventArgs^  e) {
+		vector<string> v = this->getElements();
+
+		string* elem = new string[v.size()];
+
+		for (int i = 0; i < v.size(); ++i)
+			elem[i] = v[i];
+
+		if (radioButton2->Checked)
+			this->fileExp->ordenarAscendente(elem, v.size());
+		if (radioButton1->Checked)
+			this->fileExp->ordenarDescendente(elem, v.size());
+		listBox1->Items->Clear();
+
+		for (int i = 0; i < v.size(); ++i) {
+			String^ n = gcnew String(elem[i].c_str());
+			listBox1->Items->Add(n);
+		}
+
+	}
+private: System::Void radioButton1_CheckedChanged(System::Object^  sender, System::EventArgs^  e) {
 }
 };
 }

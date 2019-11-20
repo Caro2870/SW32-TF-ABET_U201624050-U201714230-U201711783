@@ -66,7 +66,7 @@ private:
 		}
 		else if (val == key(node->elem)) {
 			v.push_back(node->elem);
-			find(node->left , val, v);
+			find(node->left, val, v);
 			find(node->right, val, v);
 		}
 		else if (val < key(node->elem)) {
@@ -97,13 +97,16 @@ private:
 	void findMa(Node* node, Comparable val, vector<T>& v) {
 		if (node == nullptr) {
 			return;
-		} else if (val == key(node->elem)) {
+		}
+		else if (val == key(node->elem)) {
 			findMa(node->right, val, v);
-		} else if (val < key(node->elem)) {
+		}
+		else if (val < key(node->elem)) {
 			v.push_back(node->elem);
 			findMa(node->left, val, v);
 			findMa(node->right, val, v);
-		} else  {
+		}
+		else {
 			findMa(node->right, val, v);
 		}
 	}
@@ -111,9 +114,11 @@ private:
 	void findMin(Node* node, Comparable val, vector<T>& v) {
 		if (node == nullptr) {
 			return;
-		} else if (val == key(node->elem)) {
+		}
+		else if (val == key(node->elem)) {
 			findMin(node->left, val, v);
-		} else if (val < key(node->elem)) {
+		}
+		else if (val < key(node->elem)) {
 			findMin(node->left, val, v);
 		}
 		else {
