@@ -76,17 +76,25 @@ private:
 			find(node->right, val, v);
 		}
 	}
+	bool elveinte(string elem, string comp) {
+		size_t found = elem.find(comp);
+		if (found != string::npos) {
+			return true;
+		}
+		return false;
+
+	}
 	//AGREGAR ELEMENTOS POR PRIMERA LETRA
 	void findX(Node* node, Comparable val, vector<T>& v) {
 		if (node == nullptr) {
 			return;
 		}
-		else if (val[0] == key(node->elem)[0]) {
+		else if (elveinte(key(node->elem), val)) {
 			v.push_back(node->elem);
 			findX(node->left, val, v);
 			findX(node->right, val, v);
 		}
-		else if (val[0] < key(node->elem)[0]) {
+		else if (val < key(node->elem)) {
 			findX(node->left, val, v);
 		}
 		else {

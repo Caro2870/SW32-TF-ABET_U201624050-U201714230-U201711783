@@ -76,7 +76,6 @@ namespace TrabajoFinalO{
 
 		void InitializeComponent(void)
 		{
-			System::ComponentModel::ComponentResourceManager^  resources = (gcnew System::ComponentModel::ComponentResourceManager(MyForm::typeid));
 			this->txtFile = (gcnew System::Windows::Forms::TextBox());
 			this->buttOpen = (gcnew System::Windows::Forms::Button());
 			this->label2 = (gcnew System::Windows::Forms::Label());
@@ -157,7 +156,7 @@ namespace TrabajoFinalO{
 			this->radioButton2->BackColor = System::Drawing::SystemColors::ScrollBar;
 			this->radioButton2->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 9.75F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
-			this->radioButton2->Location = System::Drawing::Point(567, 485);
+			this->radioButton2->Location = System::Drawing::Point(1294, 514);
 			this->radioButton2->Name = L"radioButton2";
 			this->radioButton2->Size = System::Drawing::Size(108, 20);
 			this->radioButton2->TabIndex = 19;
@@ -171,7 +170,7 @@ namespace TrabajoFinalO{
 			this->radioButton1->BackColor = System::Drawing::SystemColors::ScrollBar;
 			this->radioButton1->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 9.75F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
-			this->radioButton1->Location = System::Drawing::Point(443, 484);
+			this->radioButton1->Location = System::Drawing::Point(1170, 513);
 			this->radioButton1->Name = L"radioButton1";
 			this->radioButton1->Size = System::Drawing::Size(118, 20);
 			this->radioButton1->TabIndex = 18;
@@ -186,7 +185,7 @@ namespace TrabajoFinalO{
 			this->button4->FlatStyle = System::Windows::Forms::FlatStyle::System;
 			this->button4->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 9.75F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
-			this->button4->Location = System::Drawing::Point(517, 529);
+			this->button4->Location = System::Drawing::Point(1244, 558);
 			this->button4->Name = L"button4";
 			this->button4->Size = System::Drawing::Size(75, 23);
 			this->button4->TabIndex = 17;
@@ -201,7 +200,7 @@ namespace TrabajoFinalO{
 			this->button3->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 9, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(128)));
 			this->button3->ForeColor = System::Drawing::Color::Black;
-			this->button3->Location = System::Drawing::Point(443, 250);
+			this->button3->Location = System::Drawing::Point(1170, 279);
 			this->button3->Name = L"button3";
 			this->button3->Size = System::Drawing::Size(165, 23);
 			this->button3->TabIndex = 16;
@@ -232,7 +231,7 @@ namespace TrabajoFinalO{
 			this->listBox1->ItemHeight = 16;
 			this->listBox1->Location = System::Drawing::Point(12, 146);
 			this->listBox1->Name = L"listBox1";
-			this->listBox1->Size = System::Drawing::Size(416, 484);
+			this->listBox1->Size = System::Drawing::Size(1144, 484);
 			this->listBox1->TabIndex = 13;
 			this->listBox1->SelectedIndexChanged += gcnew System::EventHandler(this, &MyForm::listBox1_SelectedIndexChanged);
 			// 
@@ -303,7 +302,7 @@ namespace TrabajoFinalO{
 			this->label1->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 9.75F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
 			this->label1->ForeColor = System::Drawing::SystemColors::ButtonHighlight;
-			this->label1->Location = System::Drawing::Point(461, 134);
+			this->label1->Location = System::Drawing::Point(1188, 163);
 			this->label1->Name = L"label1";
 			this->label1->Size = System::Drawing::Size(182, 18);
 			this->label1->TabIndex = 25;
@@ -317,7 +316,7 @@ namespace TrabajoFinalO{
 			this->label3->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 9.75F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
 			this->label3->ForeColor = System::Drawing::Color::White;
-			this->label3->Location = System::Drawing::Point(435, 284);
+			this->label3->Location = System::Drawing::Point(1162, 313);
 			this->label3->Name = L"label3";
 			this->label3->Size = System::Drawing::Size(179, 16);
 			this->label3->TabIndex = 26;
@@ -325,21 +324,21 @@ namespace TrabajoFinalO{
 			// 
 			// txtEmpieza
 			// 
-			this->txtEmpieza->Location = System::Drawing::Point(524, 163);
+			this->txtEmpieza->Location = System::Drawing::Point(1251, 192);
 			this->txtEmpieza->Name = L"txtEmpieza";
 			this->txtEmpieza->Size = System::Drawing::Size(100, 20);
 			this->txtEmpieza->TabIndex = 27;
 			// 
 			// txtCotiene
 			// 
-			this->txtCotiene->Location = System::Drawing::Point(524, 208);
+			this->txtCotiene->Location = System::Drawing::Point(1251, 237);
 			this->txtCotiene->Name = L"txtCotiene";
 			this->txtCotiene->Size = System::Drawing::Size(100, 20);
 			this->txtCotiene->TabIndex = 28;
 			// 
 			// txtTermina
 			// 
-			this->txtTermina->Location = System::Drawing::Point(524, 186);
+			this->txtTermina->Location = System::Drawing::Point(1251, 215);
 			this->txtTermina->Name = L"txtTermina";
 			this->txtTermina->Size = System::Drawing::Size(100, 20);
 			this->txtTermina->TabIndex = 29;
@@ -351,7 +350,7 @@ namespace TrabajoFinalO{
 			this->label4->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 9.75F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
 			this->label4->ForeColor = System::Drawing::SystemColors::ButtonHighlight;
-			this->label4->Location = System::Drawing::Point(435, 167);
+			this->label4->Location = System::Drawing::Point(1162, 196);
 			this->label4->Name = L"label4";
 			this->label4->Size = System::Drawing::Size(97, 16);
 			this->label4->TabIndex = 30;
@@ -364,7 +363,7 @@ namespace TrabajoFinalO{
 			this->label5->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 9, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
 			this->label5->ForeColor = System::Drawing::SystemColors::ButtonHighlight;
-			this->label5->Location = System::Drawing::Point(442, 211);
+			this->label5->Location = System::Drawing::Point(1169, 240);
 			this->label5->Name = L"label5";
 			this->label5->Size = System::Drawing::Size(64, 15);
 			this->label5->TabIndex = 31;
@@ -377,7 +376,7 @@ namespace TrabajoFinalO{
 			this->label6->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 9, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(128)));
 			this->label6->ForeColor = System::Drawing::SystemColors::ButtonHighlight;
-			this->label6->Location = System::Drawing::Point(434, 188);
+			this->label6->Location = System::Drawing::Point(1161, 217);
 			this->label6->Name = L"label6";
 			this->label6->Size = System::Drawing::Size(87, 15);
 			this->label6->TabIndex = 32;
@@ -390,7 +389,7 @@ namespace TrabajoFinalO{
 			this->label7->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 9, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
 			this->label7->ForeColor = System::Drawing::Color::White;
-			this->label7->Location = System::Drawing::Point(434, 341);
+			this->label7->Location = System::Drawing::Point(1161, 370);
 			this->label7->Name = L"label7";
 			this->label7->Size = System::Drawing::Size(76, 15);
 			this->label7->TabIndex = 39;
@@ -403,7 +402,7 @@ namespace TrabajoFinalO{
 			this->label8->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 9, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
 			this->label8->ForeColor = System::Drawing::Color::White;
-			this->label8->Location = System::Drawing::Point(434, 367);
+			this->label8->Location = System::Drawing::Point(1161, 396);
 			this->label8->Name = L"label8";
 			this->label8->Size = System::Drawing::Size(51, 15);
 			this->label8->TabIndex = 38;
@@ -416,7 +415,7 @@ namespace TrabajoFinalO{
 			this->label9->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 9, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
 			this->label9->ForeColor = System::Drawing::Color::White;
-			this->label9->Location = System::Drawing::Point(434, 317);
+			this->label9->Location = System::Drawing::Point(1161, 346);
 			this->label9->Name = L"label9";
 			this->label9->Size = System::Drawing::Size(74, 15);
 			this->label9->TabIndex = 37;
@@ -424,7 +423,7 @@ namespace TrabajoFinalO{
 			// 
 			// txtMenor
 			// 
-			this->txtMenor->Location = System::Drawing::Point(508, 338);
+			this->txtMenor->Location = System::Drawing::Point(1235, 367);
 			this->txtMenor->Name = L"txtMenor";
 			this->txtMenor->Size = System::Drawing::Size(100, 20);
 			this->txtMenor->TabIndex = 36;
@@ -432,7 +431,7 @@ namespace TrabajoFinalO{
 			// 
 			// txtIgual
 			// 
-			this->txtIgual->Location = System::Drawing::Point(508, 364);
+			this->txtIgual->Location = System::Drawing::Point(1235, 393);
 			this->txtIgual->Name = L"txtIgual";
 			this->txtIgual->Size = System::Drawing::Size(100, 20);
 			this->txtIgual->TabIndex = 35;
@@ -440,7 +439,7 @@ namespace TrabajoFinalO{
 			// 
 			// txtMayor
 			// 
-			this->txtMayor->Location = System::Drawing::Point(508, 314);
+			this->txtMayor->Location = System::Drawing::Point(1235, 343);
 			this->txtMayor->Name = L"txtMayor";
 			this->txtMayor->Size = System::Drawing::Size(100, 20);
 			this->txtMayor->TabIndex = 34;
@@ -451,7 +450,7 @@ namespace TrabajoFinalO{
 			this->button1->BackColor = System::Drawing::SystemColors::Info;
 			this->button1->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 9.75F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
-			this->button1->Location = System::Drawing::Point(443, 402);
+			this->button1->Location = System::Drawing::Point(1170, 431);
 			this->button1->Name = L"button1";
 			this->button1->Size = System::Drawing::Size(165, 32);
 			this->button1->TabIndex = 33;
@@ -463,9 +462,8 @@ namespace TrabajoFinalO{
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
-			this->BackColor = System::Drawing::SystemColors::Highlight;
-			this->BackgroundImage = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"$this.BackgroundImage")));
-			this->ClientSize = System::Drawing::Size(672, 661);
+			this->BackColor = System::Drawing::Color::DarkSlateGray;
+			this->ClientSize = System::Drawing::Size(1426, 661);
 			this->Controls->Add(this->label7);
 			this->Controls->Add(this->label8);
 			this->Controls->Add(this->label9);
