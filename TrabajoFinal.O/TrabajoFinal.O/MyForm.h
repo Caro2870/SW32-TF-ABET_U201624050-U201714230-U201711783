@@ -76,6 +76,7 @@ namespace TrabajoFinalO{
 
 		void InitializeComponent(void)
 		{
+			System::ComponentModel::ComponentResourceManager^  resources = (gcnew System::ComponentModel::ComponentResourceManager(MyForm::typeid));
 			this->txtFile = (gcnew System::Windows::Forms::TextBox());
 			this->buttOpen = (gcnew System::Windows::Forms::Button());
 			this->label2 = (gcnew System::Windows::Forms::Label());
@@ -148,6 +149,7 @@ namespace TrabajoFinalO{
 			this->txtBuscar->Name = L"txtBuscar";
 			this->txtBuscar->Size = System::Drawing::Size(177, 20);
 			this->txtBuscar->TabIndex = 20;
+			this->txtBuscar->KeyPress += gcnew System::Windows::Forms::KeyPressEventHandler(this, &MyForm::validarBuscar);
 			// 
 			// radioButton2
 			// 
@@ -247,6 +249,7 @@ namespace TrabajoFinalO{
 			this->rButtNombre->TabStop = true;
 			this->rButtNombre->Text = L"Nombre";
 			this->rButtNombre->UseVisualStyleBackColor = false;
+			this->rButtNombre->CheckedChanged += gcnew System::EventHandler(this, &MyForm::rButtNombre_CheckedChanged);
 			// 
 			// rButtTam
 			// 
@@ -461,6 +464,7 @@ namespace TrabajoFinalO{
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->BackColor = System::Drawing::SystemColors::Highlight;
+			this->BackgroundImage = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"$this.BackgroundImage")));
 			this->ClientSize = System::Drawing::Size(672, 661);
 			this->Controls->Add(this->label7);
 			this->Controls->Add(this->label8);
@@ -778,6 +782,25 @@ private: System::Void valT(System::Object^  sender, System::Windows::Forms::KeyP
 	{
 		e->Handled = true;
 	}
+}
+private: System::Void rButtNombre_CheckedChanged(System::Object^  sender, System::EventArgs^  e) {
+}
+private: System::Void validarBuscar(System::Object^  sender, System::Windows::Forms::KeyPressEventArgs^  e) {
+	if(rButtTam->Checked){
+		if (Char::IsDigit(e->KeyChar))
+		{
+			e->Handled = false;
+		}
+		else if (Char::IsControl(e->KeyChar))
+		{
+			e->Handled = false;
+		}
+		else
+		{
+			e->Handled = true;
+		
+}
+		}
 }
 };
 }
